@@ -14,4 +14,6 @@ sshez where you don't have to remember your ips or deal with ssh config
 
 ## Missing
 
-   All the other options in [ssh documentation](http://linux.die.net/man/5/ssh_config)
+*   All the other options in [ssh documentation](http://linux.die.net/man/5/ssh_config)
+*   Add -r option to remove aliase
+   
