@@ -22,7 +22,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+  try sshez -h
+
+    Usage: sshez user@ip [options]
+
+    Specific options:
+        -p, --port PORT                  Specify a port
+        -i, --identity_file [key]        Add identity
+
+    Common options:
+        -h, --help                       Show this message
+        --version  
 
 ## Development
 
@@ -32,10 +42,21 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/sshez. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Gomaak/sshez. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+## Output
+sshez where you don't have to remember your ips or deal with ssh config
+
+                      Show version
+
+
+## Missing
+
+*   All the other options in [ssh documentation](http://linux.die.net/man/5/ssh_config)
+*   Add -r option to remove aliases
 

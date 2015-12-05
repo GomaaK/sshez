@@ -24,6 +24,7 @@ describe Sshez do
     it 'always appends "Done" if succeeds' do
       expect(output).to end_with 'Done!'
     end
+
   end
 
   describe "fails" do
@@ -37,14 +38,27 @@ describe Sshez do
     it 'and then asks for help at the end' do
       expect(output).to end_with 'Use -h for help'
     end
+
   end
 
   describe "not implemented" do
     let(:input) { 'google root@74.125.224.72 -p 80 -t -r' }
     let(:output) { subject.process(input.split(" ")) }
+
     it 'prints sad face' do
       expect(output).to end_with 'Not implemented :('
     end
+
+  end
+
+  describe "help works" do
+    let(:input) { '-h' }
+    let(:output) { subject.process(input.split(" ")) }
+
+    it 'prints but outputs nothing' do
+      expect(output).to eq nil
+    end
+
   end
 
 

@@ -49,13 +49,11 @@ module Sshez
         # Try it and see!
         opts.on_tail("-h", "--help", "Show this message") do
           puts opts
-          exit
         end
 
         # Another typical switch to print the version.
         opts.on_tail("--version", "Show version") do
           puts ::Version.join('.')
-          exit
         end
       end
 
@@ -107,7 +105,11 @@ module Sshez
 
     def process(args)
       # parse the params to get the options
-      if args.length < 2 || !args[1].include?("@") 
+      if (args.length < 2 || !args[1].include?("@"))
+        if args[0] == "-h"
+         Params.parse(args)
+         return nil
+        end
         output = %Q|Invalid input
         Use -h for help|
         return output
