@@ -49,14 +49,14 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/Gomaak
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
-## Output
-sshez where you don't have to remember your ips or deal with ssh config
-
-                      Show version
 
 
 ## Missing
 
 *   All the other options in [ssh documentation](http://linux.die.net/man/5/ssh_config)
 *   Add -r option to remove aliases
+
+## Credit
+
+Mohamed Ossama who gave me this idea
 
