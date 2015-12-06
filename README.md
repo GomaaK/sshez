@@ -1,8 +1,17 @@
 # Sshez
+[![Gem Version](https://badge.fury.io/rb/sshez.svg)](https://badge.fury.io/rb/sshez)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/sshez`. To experiment with that code, run `bin/console` for an interactive prompt.
+If you have multiple servers that you access on daily bases! sshez helps you configure your ssh/config file so you will never need to remember ip or ports again.
 
-TODO: Delete this and the text above, and describe your gem
+### Example
+
+    sshez mw_server root@74.125.224.72 -p 120
+    
+you will be able to use
+
+    ssh mw_server
+    
+
 
 ## Installation
 
@@ -59,4 +68,5 @@ The gem is available as open source under the terms of the [MIT License](http://
 ## Credit
 
 Mohamed Ossama who gave me this idea
+
 
