@@ -41,15 +41,6 @@ describe Sshez do
 
   end
 
-  describe "not implemented" do
-    let(:input) { 'google root@74.125.224.72 -p 80 -t -r' }
-    let(:output) { subject.process(input.split(" ")) }
-
-    it 'prints sad face' do
-      expect(output).to end_with 'Not implemented :('
-    end
-
-  end
 
   describe "help works" do
     let(:input) { '-h' }
@@ -59,6 +50,16 @@ describe Sshez do
       expect(output).to eq nil
     end
 
+  end
+
+  describe "remove" do
+    before { subject.process(%w{google root@74.12.32.42 -p 30}) }
+    let(:input) { "google -r" }
+    let(:output) { subject.process(input.split(" ")) }
+
+    it 'ends with 30' do
+      expect(output).to end_with "30\n"
+    end
   end
 
 
