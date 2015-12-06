@@ -17,7 +17,7 @@ module Sshez
       options = OpenStruct.new
 
       opt_parser = OptionParser.new do |opts|
-        opts.banner = "Usage: sshez name user@ip [options]"
+        opts.banner = "Usage: sshez aliase role@host [options]"
 
         opts.separator ""
         opts.separator "Specific options:"
