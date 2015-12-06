@@ -17,7 +17,7 @@ module Sshez
       options = OpenStruct.new
 
       opt_parser = OptionParser.new do |opts|
-        opts.banner = "Usage: sshez aliase role@host [options]"
+        opts.banner = "Usage: sshez alias (role@host|-r) [options]"
 
         opts.separator ""
         opts.separator "Specific options:"
@@ -75,26 +75,57 @@ module Sshez
         file.close
       end
       output += "to #{file_path}\n"
+      output += "try ssh #{name} \n"
       
       output
     end
 
     def self.form(name, user, host, options)
-      retuned = %Q|Host #{name}
-        HostName #{host}
-        User #{user}
-      |
+      retuned = "\n"
+      retuned += "Host #{name}\n"
+      retuned += "  HostName #{host}\n"
+      retuned += "  User #{user}\n"
+      
       if options.port
-        retuned += %Q|  Port #{options.port}
-        |
+        retuned += "  Port #{options.port}\n"
       end
 
       if options.identity_file
-        retuned += %Q|  IdentityFile #{options.identity_file}
-        |
+        retuned += "  IdentityFile #{options.identity_file}\n"
       end
       retuned
 
+    end
+
+    def self.remove(name)
+      output = ""
+      started_removing = false
+      file_path = File.expand_path('~')+"/.ssh/config"
+      file = File.open(file_path, "r")
+      new_file = File.open(file_path+"temp", "w")
+      file.each do |line|
+        if line.include?("Host #{name}")|| started_removing
+          if started_removing && line.include?("Host ") && !line.include?(name)
+            started_removing = false
+          else
+            output += line
+            started_removing = true
+          end
+        else
+          new_file.write(line)
+        end
+      end
+      file.close
+      new_file.close
+      File.delete(file_path)
+      File.rename(file_path+"temp", file_path)
+
+      if output.empty?
+        return "could not find host (#{name})"
+      else
+        return output
+      end
+      
     end
     
 
@@ -105,10 +136,12 @@ module Sshez
 
     def process(args)
       # parse the params to get the options
-      if (args.length < 2 || !args[1].include?("@"))
+      if (args.length < 2 || !args[1].include?("@") || args[0][0] == '-')
         if args[0] == "-h"
          Params.parse(args)
          return nil
+        elsif ['-r', "--remove"].include?(args[1]) 
+          return ConfigFile.remove(args[0])
         end
         output = %Q|Invalid input
         Use -h for help|
@@ -117,9 +150,7 @@ module Sshez
       options = Params.parse(args)
 
 
-      if options.remove
-        "Not implemented :("
-      else
+      unless options.remove
         user, host = args[1].split("@") 
         output = ConfigFile.append(args[0], user, host, options)
         output + "Done!"
