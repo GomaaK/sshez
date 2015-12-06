@@ -33,7 +33,7 @@ Or install it yourself as:
 
   try sshez -h
 
-    Usage: sshez user@ip [options]
+    Usage: sshez aliase user@ip [options]
 
     Specific options:
         -p, --port PORT                  Specify a port
