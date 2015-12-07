@@ -15,6 +15,7 @@ module Sshez
       # The options specified on the command line will be collected in *options*.
       # We set default values here.
       options = OpenStruct.new
+      options.file_content = OpenStruct.new
 
       opt_parser = OptionParser.new do |opts|
         opts.banner = "Usage: sshez alias (role@host|-r) [options]"
@@ -26,12 +27,14 @@ module Sshez
         opts.on("-p", "--port PORT",
                 "Specify a port") do |port|
           options.port = port
+          options.file_content.port_text = "  Port #{options.port}\n"
         end
 
         # Optional argument; multi-line description.
         opts.on("-i", "--identity_file [key]",
                 "Add identity") do |key_path|
           options.identity_file = key_path
+          options.file_content.identity_file_text = "  IdentityFile #{options.identity_file}\n"
         end
 
         opts.on("-r", "--remove", "Remove handle") do
@@ -67,7 +70,7 @@ module Sshez
     def self.append(name, user, host, options)
       output =  "Adding\n"
       config_append = form(name, user, host, options)
-      output += "" + config_append
+      output += config_append
       unless options.test
         file_path = File.expand_path('~')+"/.ssh/config"
         file = File.open(file_path, "a+")
@@ -86,12 +89,8 @@ module Sshez
       retuned += "  HostName #{host}\n"
       retuned += "  User #{user}\n"
       
-      if options.port
-        retuned += "  Port #{options.port}\n"
-      end
-
-      if options.identity_file
-        retuned += "  IdentityFile #{options.identity_file}\n"
+      options.file_content.each_pair do |key, value|
+        retuned += value
       end
       retuned
 
