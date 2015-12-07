@@ -6,8 +6,8 @@ require 'sshez/version'
 Gem::Specification.new do |spec|
   spec.name          = "sshez"
   spec.version       = Sshez::VERSION
-  spec.authors       = ["Immortal Friday"]
-  spec.email         = ["khaled.gomaa.90@gmail.com"]
+  spec.authors       = ["Immortal Friday", "Oss"]
+  spec.email         = ["khaled.gomaa.90@gmail.com", "mohamed.o.alnagdy@gmail.com"]
 
   spec.summary       = %q{Easy ssh config handling}
   spec.description   = %q{will interface your ssh config file
