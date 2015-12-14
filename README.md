@@ -10,8 +10,6 @@ If you have multiple servers that you access on daily bases! sshez helps you con
 you will be able to use
 
     ssh mw_server
-    
-
 
 ## Installation
 
@@ -21,7 +19,7 @@ you will be able to use
 
   try sshez -h
 
-    Usage: sshez aliase user@ip [options]
+    Usage: sshez alias user@ip [options]
 
     Specific options:
         -p, --port PORT                  Specify a port

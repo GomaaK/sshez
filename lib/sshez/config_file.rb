@@ -10,6 +10,8 @@ module Sshez
         file = File.open(FILE_PATH, "a+")
         file.write(config_append)
         file.close
+        puts "Successfully added `#{name}` as an alias for `#{user}@#{host}`"
+        system "chmod 600 #{FILE_PATH}"
       end
       output += "to #{FILE_PATH}\n"
       output += "try ssh #{name} \n"
@@ -51,7 +53,7 @@ module Sshez
       new_file.close
       File.delete(FILE_PATH)
       File.rename(FILE_PATH + "temp", FILE_PATH)
-      # system "chmod 600 #{FILE_PATH}"
+      system "chmod 600 #{FILE_PATH}"
 
       if output.empty?
         return "could not find host (#{name})"
