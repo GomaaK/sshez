@@ -101,23 +101,28 @@ module Sshez
       started_removing = false
       file_path = File.expand_path('~')+"/.ssh/config"
       file = File.open(file_path, "r")
-      new_file = File.open(file_path+"temp", "w")
+      new_file = File.open(file_path + "temp", "w")
+
       file.each do |line|
+
         if line.include?("Host #{name}")|| started_removing
+
           if started_removing && line.include?("Host ") && !line.include?(name)
             started_removing = false
           else
             output += line
             started_removing = true
           end
+
         else
           new_file.write(line)
         end
+
       end
       file.close
       new_file.close
       File.delete(file_path)
-      File.rename(file_path+"temp", file_path)
+      File.rename(file_path + "temp", file_path)
 
       if output.empty?
         return "could not find host (#{name})"
