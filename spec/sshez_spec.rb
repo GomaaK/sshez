@@ -24,7 +24,6 @@ describe Sshez do
     it 'always appends "Done" if succeeds' do
       expect(output).to end_with 'Done!'
     end
-
   end
 
   describe "fails" do
@@ -41,7 +40,6 @@ describe Sshez do
 
   end
 
-
   describe "help works" do
     let(:input) { '-h' }
     let(:output) { subject.process(input.split(" ")) }
@@ -49,7 +47,6 @@ describe Sshez do
     it 'prints but outputs nothing' do
       expect(output).to eq nil
     end
-
   end
 
   describe "remove" do
@@ -62,7 +59,23 @@ describe Sshez do
     end
   end
 
+  describe "list works" do
+    before { subject.process(%w{google root@74.12.32.42 -p 30}) }
+    let(:input) { "list" }
+    let(:output) { subject.process(input.split(" ")) }
+    after { subject.process(%w{google -r}) }
 
+    it 'contains added alias' do
+      expect(output).to end_with "google\n"
+    end
+  end
 
-  
+  describe "version works" do
+    let(:input) { "-v" }
+    let(:output) { subject.process(input.split(" ")) }
+
+    it 'matches gem version' do
+      expect(output).to end_with "#{Sshez.version}"
+    end
+  end
 end
