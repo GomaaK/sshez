@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.email         = ["khaled.gomaa.90@gmail.com", "mohamed.o.alnagdy@gmail.com"]
 
   spec.summary       = %q{Easy ssh config handling}
-  spec.description   = %q{will interface your ssh config file
-    Allowing you to add aliases to your server and do a lot of cool stuff}
+  spec.description   = %q{No more remembering ips users or ports! Sshez interfaces your ssh config file
+    Allowing you to add aliases for your ssh connections to easily access them.}
   spec.homepage      = "https://github.com/GomaaK/sshez"
   spec.license       = "MIT"
 
@@ -23,5 +23,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
-
 end

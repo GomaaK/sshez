@@ -24,7 +24,6 @@ describe Sshez do
     it 'always appends "Done" if succeeds' do
       expect(output).to end_with 'Done!'
     end
-
   end
 
   describe "fails" do
@@ -41,7 +40,6 @@ describe Sshez do
 
   end
 
-
   describe "help works" do
     let(:input) { '-h' }
     let(:output) { subject.process(input.split(" ")) }
@@ -49,7 +47,6 @@ describe Sshez do
     it 'prints but outputs nothing' do
       expect(output).to eq nil
     end
-
   end
 
   describe "remove" do
@@ -61,8 +58,4 @@ describe Sshez do
       expect(output).to end_with "30\n"
     end
   end
-
-
-
-  
 end
