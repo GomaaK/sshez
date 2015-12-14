@@ -77,6 +77,7 @@ module Sshez
         puts "Listing aliases:"
         servers.each{|x| puts "\t- #{x}"}
       end
+      return servers.join(',')
     end
   end
 end

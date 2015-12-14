@@ -10,7 +10,7 @@ module Sshez
       options.file_content = OpenStruct.new
 
       opt_parser = OptionParser.new do |opts|
-        opts.banner = "Usage:\n\tsshez alias (role@host|-r) [options]\n\tsshez list"
+        opts.banner = "Usage:\n\tsshez <alias> (role@host|-r) [options]\n\tsshez remove <alias>\n\tsshez list"
 
         opts.separator ""
         opts.separator "Specific options:"
@@ -33,7 +33,7 @@ module Sshez
           options.remove = true
         end
 
-        opts.on("-t", "--test", "writes nothing") do
+        opts.on("-t", "--test", "Writes nothing") do
           options.test = true
         end
 

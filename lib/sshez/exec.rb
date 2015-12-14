@@ -4,10 +4,16 @@ module Sshez
       # parse the params to get the options
       if args.length == 0
         args[0] = '-h'
-      end
-
-      if args[0] == 'list'
+      elsif args[0] == 'list'
         return ConfigFile.list
+      elsif args[0] == 'remove'
+        if args[1]
+          return ConfigFile.remove(args[1])
+        else
+          output %Q|Select an alias to remove `sshez remove alias`.\n Use `sshez list` to list your aliases|
+          puts output
+          return output
+        end
       end
 
       if (args.length < 2 || !args[1].include?("@") || args[0][0] == '-')
@@ -18,11 +24,11 @@ module Sshez
           return ConfigFile.remove(args[0])
         elsif ['-v', '--version'].include?(args[0])
           puts Sshez.version
-          return
+          return Sshez.version
         end
         output = %Q|Invalid input. Use -h for help|
         puts output
-        return
+        return output
       end
       options = Params.parse(args)
 

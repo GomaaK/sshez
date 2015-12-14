@@ -58,4 +58,24 @@ describe Sshez do
       expect(output).to end_with "30\n"
     end
   end
+
+  describe "list works" do
+    before { subject.process(%w{google root@74.12.32.42 -p 30}) }
+    let(:input) { "list" }
+    let(:output) { subject.process(input.split(" ")) }
+    after { subject.process(%w{google -r}) }
+
+    it 'contains added alias' do
+      expect(output).to end_with "google\n"
+    end
+  end
+
+  describe "version works" do
+    let(:input) { "-v" }
+    let(:output) { subject.process(input.split(" ")) }
+
+    it 'matches gem version' do
+      expect(output).to end_with "#{Sshez.version}"
+    end
+  end
 end

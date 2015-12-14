@@ -5,6 +5,8 @@ If you have multiple servers that you access on daily bases! sshez helps you con
 
 ### Example
 
+Add an alias `mw_server`
+
     sshez mw_server root@74.125.224.72 -p 120
     
 you will be able to use
@@ -17,17 +19,23 @@ you will be able to use
 
 ## Usage
 
-  try sshez -h
+    sshez -h
 
-    Usage: sshez alias user@ip [options]
+    Usage:
+        sshez <alias> (role@host|-r) [options]
+        sshez remove <alias>
+        sshez list
 
     Specific options:
         -p, --port PORT                  Specify a port
         -i, --identity_file [key]        Add identity
+        -r, --remove                     Remove handle
+        -t, --test                       Writes nothing
 
     Common options:
+        -l, --list                       List aliases
+        -v, --version                    Show version
         -h, --help                       Show this message
-        --version  
 
 ## Development
 
@@ -49,10 +57,9 @@ The gem is available as open source under the terms of the [MIT License](http://
 ## Missing
 
 *   All the other options in [ssh documentation](http://linux.die.net/man/5/ssh_config)
-*   Add -r option to remove aliases
 
 ## Credit
 
-Mohamed Ossama who gave me this idea
+Mohamed Osama who gave me this idea
 
 
