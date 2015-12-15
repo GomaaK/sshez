@@ -28,6 +28,11 @@ module Sshez
           options.identity_file = key_path
           options.file_content.identity_file_text = "  IdentityFile #{options.identity_file}\n"
         end
+        
+        opts.on("-b", "--batch_mode", "Batch Mode") do
+          options.batch_mode = "yes"
+          options.file_content.batch_mode_text = "  BatchMode yes\n"
+        end
 
         opts.on("-r", "--remove", "Remove handle") do
           options.remove = true
@@ -55,6 +60,7 @@ module Sshez
           puts opts
           puts "\n"
         end
+        
       end
 
       opt_parser.parse!(args)
