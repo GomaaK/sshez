@@ -8,7 +8,7 @@ describe Sshez do
   end
 
   describe '#process' do
-    let(:input) { 'google root@74.125.224.72 -p 80 -t' }
+    let(:input) { 'google root@74.125.224.72 -p 80 -t -b' }
     let(:output) { subject.process(input.split(" ")) }
 
     it 'begins with what it does' do
@@ -19,6 +19,10 @@ describe Sshez do
       expect(output).to match /Host google/i
       expect(output).to match /HostName 74.125.224.72/i
       expect(output).to match /Port 80/i
+    end
+    
+    it 'adds batch mode option' do
+      expect(output).to match /BatchMode yes/i
     end
 
     it 'always appends "Done" if succeeds' do
