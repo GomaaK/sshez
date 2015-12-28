@@ -1,5 +1,6 @@
 # Sshez
 [![Gem Version](https://badge.fury.io/rb/sshez.svg)](https://badge.fury.io/rb/sshez)
+[![Code Climate](https://codeclimate.com/github/GomaaK/sshez/badges/gpa.svg)](https://codeclimate.com/github/GomaaK/sshez)
 
 If you have multiple servers that you access on daily bases! sshez helps you configure your ssh/config file so you will never need to remember ip or ports again.
 

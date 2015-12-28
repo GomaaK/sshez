@@ -1,0 +1,7 @@
+engines:
+  brakeman:
+    enabled: true
+
+ratings:
+   paths:
+   - ".rb"
