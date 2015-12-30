@@ -5,15 +5,16 @@ module Sshez
   # Mainly used for testing purposes
   class PrintingManager
     include Singleton
+    attr_reader :output
 
     def initialize
-      @output = ""
+      @output = ''
       @verbose = false
     end
 
     # adds to output then prints
     def print(text)
-      @output += %Q(#{text}\n)
+      @output += %(#{text}\n)
       puts text
     end # print(text)
 
@@ -21,7 +22,7 @@ module Sshez
     # prints only if verbose set to true
     #
     def verbose_print(text)
-      @output += %Q(#{text}\n)
+      @output += %(#{text}\n)
       puts text if @verbose
     end
 
@@ -30,13 +31,6 @@ module Sshez
     #
     def output?
       !@output.empty?
-    end
-
-    #
-    # getter for all the printing log
-    #
-    def output
-      @output
     end
 
     #
@@ -53,6 +47,5 @@ module Sshez
       @output = ''
       @verbose = false
     end
-
-  end
+  end # PrintingManager
 end

@@ -1,4 +1,4 @@
-module Sshez  
+module Sshez
   # handles parsing the arguments to meaningful actions
   #
   # Parser.new(listener).parse(args)
@@ -20,13 +20,39 @@ module Sshez
       command = Command::ALL[args.first]
       # The options specified on the command line will be collected in *options*.
       # We set default values here.
-      # file_content will contain what should be added in the next step to the config file
+      # file_content will contain 
+      # what should be added in the next step to the config file
       options = OpenStruct.new(file_content: OpenStruct.new)
 
-      opt_parser = OptionParser.new do |opts|
-        opts.banner = "Usage:\n"+
-        "\tsshez add <alias> (role@host) [options]\n"+
-        "\tsshez remove <alias>\n\tsshez list"
+      opt_parser = init_options_parser(options)
+
+      # this will remove the matched options from the args array
+      opt_parser.parse!(args)
+
+      args.delete_at(0)
+      if command && !options.halt
+        if command.valid?(args)
+          command.args = args
+          parsing_succeeded(command, options)
+        else
+          command.args = args
+          parsing_failed(command)
+        end
+      else
+        no_command_supplied
+      end
+    end  # parse(args)
+
+    #
+    # Initates an OptionParser with all of the possible options
+    # and how to handle them
+    #
+    def init_options_parser(options)
+      OptionParser.new do |opts|
+        opts.banner = "Usage:\n"\
+        "\tsshez add <alias> (role@host) [options]\n"\
+        "\tsshez remove <alias>\n"\
+        "\tsshez list"
 
         opts.separator ''
         opts.separator 'Specific options:'
@@ -38,7 +64,7 @@ module Sshez
 
         opts.on('-i', '--identity_file [key]',
                 'Add identity') do |key_path|
-          options.file_content.identity_file_text = "  IdentityFile #{options.identity_file}\n"
+          options.file_content.identity_file_text = "  IdentityFile #{key_path}\n"
         end
         
         opts.on('-b', '--batch_mode', 'Batch Mode') do
@@ -68,28 +94,8 @@ module Sshez
           PRINTER.print opts
           options.halt = true
         end
-        
       end # OptionParser.new
-
-      # this will remove the matched options from the args array
-      opt_parser.parse!(args)
-
-      args.delete_at(0)
-      if command && !options.halt
-        if command.valid?(args)
-          command.args = args
-          parsing_succeeded(command, options)
-        else
-          command.args = args
-          parsing_failed(command)
-        end
-      else
-        no_command_supplied
-      end
-
-      
-    end  # parse(args)
-
+    end
 
     #
     # Keeps track of the which command the user called
@@ -103,6 +109,7 @@ module Sshez
       # correct_format: the way the user should run this command
       # args_processor: (optional) a proc that will process the args before setting them
       #
+      attr_reader :name, :args
       def initialize(name, validator, correct_format, args_processor=nil)
         @name = name
         @validator = validator
@@ -114,34 +121,22 @@ module Sshez
       # a list of all commands
       #
       ALL = {
-        'add' => Command.new('add', (Proc.new { |args| (args.length == 2) && (args[1].include?('@')) }), 
-          'sshez add <alias> (role@host) [options]', (Proc.new {|alias_name, role_host| [alias_name] + role_host.split('@') })),
-        'remove' => Command.new('remove', (Proc.new { |args| args.length == 1 }), 'sshez remove <alias>'),
-        'list' => Command.new('list', (Proc.new { |args| args.empty? }), 'sshez list')
+        'add' => Command.new('add', 
+          (proc { | args | (args.length == 2) && (args[1].include?('@')) }),
+          'sshez add <alias> (role@host) [options]',
+          (proc {| alias_name, role_host | [alias_name] + role_host.split('@') })),
+        'remove' => Command.new('remove',
+          (proc { | args | args.length == 1 }),
+          'sshez remove <alias>'),
+        'list' => Command.new('list',
+          (proc { | args | args.empty? }),
+          'sshez list')
       }
       #
       # processes the value passed if a processor was defined
       #
       def args=(value)
-        if @args_processor
-          @args = @args_processor.call(value)
-        else
-          @args = value
-        end
-      end
-
-      #
-      # name getter
-      #
-      def name
-        @name
-      end
-
-      #
-      # args getter
-      #
-      def args
-        @args
+        @args = @args_processor ? @args_processor.call(value) : value
       end
       #
       # validateds the args using the proc previously defined

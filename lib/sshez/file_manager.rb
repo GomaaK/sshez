@@ -83,7 +83,6 @@ module Sshez
     # removes an aliase from the config file (all its occurrences will be removed too)
     #
     def remove(aliase_name, options)
-      output = ""
       started_removing = false
       file = File.open(FILE_PATH, 'r')
       new_file = File.open(FILE_PATH+'temp', 'w')
