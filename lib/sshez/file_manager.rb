@@ -1,3 +1,4 @@
+require 'forwardable'
 module Sshez  
   #
   # handles all the updates to the .ssh/config file
@@ -8,9 +9,21 @@ module Sshez
   # *  :permission_error
   # *  :finished_successfully
   #
-  class FileManager < Struct.new(:listener)
+  class FileManager
+    extend Forwardable
     FILE_PATH = File.expand_path('~') + '/.ssh/config'
     PRINTER = PrintingManager.instance
+    attr_reader :listener
+
+    def_delegators :@listener, :argument_error
+    def_delegators :@listener, :done_with_no_guarantee
+
+    #
+    # Must have the methods mentioned above
+    #
+    def initialize(listener)
+      @listener = listener
+    end
 
     #
     # Starts the execution of the +Command+ parsed with its options
@@ -19,20 +32,6 @@ module Sshez
       all_args = command.args
       all_args << options
       self.send(command.name, *all_args)
-    end
-
-    #
-    # Passes the argument error as is to the listener
-    #
-    def argument_error(command)
-      listener.argument_error(command)
-    end
-
-    #
-    # Passes the event to the listener
-    #
-    def done_with_no_guarantee
-      listener.done_with_no_guarantee
     end
 
     private

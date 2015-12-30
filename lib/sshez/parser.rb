@@ -8,8 +8,15 @@ module Sshez
   # *  :argument_error(+Command+)
   # *  :done_with_no_guarantee
   #
-  class Parser < Struct.new(:listener)
+  class Parser
     PRINTER = PrintingManager.instance
+    attr_reader :listener
+    #
+    # Must have the methods mentioned above
+    #
+    def initialize(listener)
+      @listener = listener
+    end
     #
     # Return a structure describing the options.
     #
