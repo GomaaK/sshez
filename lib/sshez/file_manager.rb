@@ -148,7 +148,7 @@ module Sshez
       end
       servers
     end
-    
+
     #
     # Raises a permission error to the listener
     #
@@ -157,15 +157,11 @@ module Sshez
     end
 
     #
-    # 
+    # finished editing the file successfully
     #
     def finish_exec
       listener.finished_successfully
     end
-
     # private
-
-
-
   end # class FileManager
 end
