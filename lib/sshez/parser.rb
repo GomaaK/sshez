@@ -17,9 +17,7 @@ module Sshez
     #
     def parse(args)
       # prit help if no args supplied
-      if args.length == 0
-        args[0] = '-h'
-      end
+      args[0] ||= '-h'
       # command is the first argument passed in the commandline
       command = Command::ALL[args.first]
       # The options specified on the command line will be collected in *options*.
