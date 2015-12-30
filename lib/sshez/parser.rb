@@ -22,9 +22,8 @@ module Sshez
       command = Command::ALL[args.first]
       # The options specified on the command line will be collected in *options*.
       # We set default values here.
-      options = OpenStruct.new
       # file_content will contain what should be added in the next step to the config file
-      options.file_content = OpenStruct.new
+      options = OpenStruct.new(file_content: OpenStruct.new)
 
       opt_parser = OptionParser.new do |opts|
         opts.banner = "Usage:\n\tsshez add <alias> (role@host) [options]\n\tsshez remove <alias>\n\tsshez list"
