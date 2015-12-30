@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe Sshez do
 
-  subject { Sshez::Exec.new }
-  it 'has a version number' do
-    expect(Sshez::VERSION).not_to be nil
-  end
+  subject { Sshez::Runner.new }
 
   describe '#process' do
-    let(:input) { 'google root@74.125.224.72 -p 80 -t -b' }
-    let(:output) { subject.process(input.split(" ")) }
+    let(:input) { %w{add google root@74.125.224.72 -p 80 -t -b} }
+    let(:output) do 
+      Sshez::PrintingManager.instance.clear!
+      subject.process(input)
+    end
 
     it 'begins with what it does' do
       expect(output).to start_with "Adding"
@@ -26,52 +26,77 @@ describe Sshez do
     end
 
     it 'always appends "Done" if succeeds' do
-      expect(output).to end_with 'Done!'
+      expect(output).to end_with "Terminatted Successfully!\n"
     end
   end
 
   describe "fails" do
-    let(:input) { 'root@74.125.224.72' }
-    let(:output) { subject.process(input.split(" ")) }
+    let(:input) { %w{root@74.125.224.72} }
+    let(:output) do 
+      Sshez::PrintingManager.instance.clear!
+      subject.process(input)
+    end
 
     it 'and printes start' do
       expect(output).to start_with "Invalid input"
     end
 
     it 'and then asks for help at the end' do
-      expect(output).to end_with 'Use -h for help'
+      expect(output).to end_with "Use -h for help\n"
     end
 
   end
 
   describe "help works" do
     let(:input) { '-h' }
-    let(:output) { subject.process(input.split(" ")) }
+    let(:output) do 
+      Sshez::PrintingManager.instance.clear!
+      subject.process([input])
+    end
 
-    it 'prints but outputs nothing' do
-      expect(output).to eq nil
+    it 'prints but ending with this message' do
+      expect(output).to end_with "Show this message\n\n"
     end
   end
 
   describe "remove" do
-    before { subject.process(%w{google root@74.12.32.42 -p 30}) }
-    let(:input) { "google -r" }
-    let(:output) { subject.process(input.split(" ")) }
+    before { subject.process(%w{add google root@74.12.32.42 -p 30}) }
+    let(:input) { %w{remove google} }
+    let(:output) do 
+      Sshez::PrintingManager.instance.clear!
+      subject.process(input)
+    end
 
     it 'ends with 30' do
-      expect(output).to end_with "30\n"
+      expect(output).to end_with "30\n\nTerminatted Successfully!\n"
     end
   end
 
   describe "list works" do
-    before { subject.process(%w{google root@74.12.32.42 -p 30}) }
-    let(:input) { "list" }
-    let(:output) { subject.process(input.split(" ")) }
-    after { subject.process(%w{google -r}) }
+    before { subject.process(%w{add google root@74.12.32.42 -p 30}) }
+    let(:input) { %w{list} }
+    let(:output) do 
+      Sshez::PrintingManager.instance.clear!
+      subject.process(input)
+    end
+    after { subject.process(%w{remove google}) }
 
     it 'contains added alias' do
-      expect(output).to end_with "google\n"
+      expect(output).to end_with "google\n\nTerminatted Successfully!\n"
     end
+  end
+
+  describe "printer works" do
+    before { Sshez::PrintingManager.instance.clear! }
+
+    let(:printer) { Sshez::PrintingManager.instance }
+    let(:output) { printer.print("this is it") }
+
+    it 'should be printed and kept' do
+      expect(output).to end_with "this is it\n"
+    end
+
+    after { Sshez::PrintingManager.instance.clear! }
   end
 
   describe "version works" do
@@ -79,7 +104,7 @@ describe Sshez do
     let(:output) { subject.process(input.split(" ")) }
 
     it 'matches gem version' do
-      expect(output).to end_with "#{Sshez.version}"
+      expect(output).to end_with "#{Sshez.version}\n"
     end
   end
 end

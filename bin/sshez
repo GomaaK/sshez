@@ -3,5 +3,5 @@
 require 'sshez'
 
 
-worker = Sshez::Exec.new  
+worker = Sshez::Runner.new
 worker.process(ARGV)

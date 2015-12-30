@@ -23,18 +23,17 @@ you will be able to use
     sshez -h
 
     Usage:
-        sshez <alias> (role@host|-r) [options]
+        sshez <alias> (role@host) [options]
         sshez remove <alias>
         sshez list
 
     Specific options:
         -p, --port PORT                  Specify a port
         -i, --identity_file [key]        Add identity
-        -r, --remove                     Remove handle
+        -b, --batch_mode                 Batch Mode
         -t, --test                       Writes nothing
 
     Common options:
-        -l, --list                       List aliases
         -v, --version                    Show version
         -h, --help                       Show this message
 
@@ -59,8 +58,5 @@ The gem is available as open source under the terms of the [MIT License](http://
 
 *   All the other options in [ssh documentation](http://linux.die.net/man/5/ssh_config)
 
-## Credit
-
-Mohamed Osama who gave me this idea
 
 
