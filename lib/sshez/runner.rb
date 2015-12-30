@@ -23,6 +23,7 @@ module Sshez
     def process(args)
       parser = Parser.new(FileManager.new(self))
       parser.parse(args)
+      PRINTER.output
     end
 
     #
@@ -50,9 +51,7 @@ module Sshez
     # When no valid command was supplied (maybe only an option)
     #
     def done_with_no_guarantee
-      if PRINTER.output?
-        PRINTER.output
-      else
+      unless PRINTER.output?
         PRINTER.print("Invalid input. Use -h for help")
       end
     end

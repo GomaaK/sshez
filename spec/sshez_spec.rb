@@ -90,7 +90,7 @@ describe Sshez do
     before { Sshez::PrintingManager.instance.clear! }
 
     let(:printer) { Sshez::PrintingManager.instance }
-    let(:output) { printer.print("this is it") }
+    let(:output) { printer.print("this is it"); printer.output }
 
     it 'should be printed and kept' do
       expect(output).to end_with "this is it\n"

@@ -15,7 +15,6 @@ module Sshez
     def print(text)
       @output += %Q|#{text}\n|
       puts text
-      @output
     end # print(text)
 
     # 
@@ -24,7 +23,6 @@ module Sshez
     def verbose_print(text)
       @output += %Q|#{text}\n|
       puts text if @verbose
-      @output
     end
 
     #
