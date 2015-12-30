@@ -57,14 +57,14 @@ module Sshez
         opts.separator ''
         opts.separator 'Specific options:'
 
-        options_for_add(opts)
+        options_for_add(opts, options)
 
         # signals that we are in testing mode
         opts.on('-t', '--test', 'Writes nothing') do
           options.test = true
         end
 
-        common_options(opts)
+        common_options(opts, options)
         
       end # OptionParser.new
     end
@@ -72,7 +72,7 @@ module Sshez
     #
     # Returns the options specifice to the add command only
     #
-    def options_for_add(opts)
+    def options_for_add(opts, options)
       opts.on('-p', '--port PORT',
               'Specify a port') do |port|
         options.file_content.port_text = "  Port #{port}\n"
@@ -91,7 +91,7 @@ module Sshez
     #
     # Returns the standard options
     #
-    def common_options(opts)
+    def common_options(opts, options)
       opts.separator ''
       opts.separator 'Common options:'
 
