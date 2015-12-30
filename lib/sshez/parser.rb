@@ -30,12 +30,12 @@ module Sshez
       opt_parser.parse!(args)
 
       args.delete_at(0)
-      if command && !options.halt
-        if command.valid?(args)
+      command_ready = command && !options.halt
+      if command_ready
           command.args = args
+        if command.valid?(args)
           parsing_succeeded(command, options)
         else
-          command.args = args
           parsing_failed(command)
         end
       else
@@ -57,44 +57,59 @@ module Sshez
         opts.separator ''
         opts.separator 'Specific options:'
 
-        opts.on('-p', '--port PORT',
-                'Specify a port') do |port|
-          options.file_content.port_text = "  Port #{port}\n"
-        end
-
-        opts.on('-i', '--identity_file [key]',
-                'Add identity') do |key_path|
-          options.file_content.identity_file_text = "  IdentityFile #{key_path}\n"
-        end
-        
-        opts.on('-b', '--batch_mode', 'Batch Mode') do
-          options.file_content.batch_mode_text = "  BatchMode yes\n"
-        end
+        options_for_add(opts)
 
         # signals that we are in testing mode
         opts.on('-t', '--test', 'Writes nothing') do
           options.test = true
         end
 
-        opts.separator ''
-        opts.separator 'Common options:'
-
-        # Another typical switch to print the version.
-        opts.on('-v', '--version', 'Show version') do
-          PRINTER.print Sshez.version
-          options.halt = true
-        end
-
-        opts.on('-z', '--verbose', 'Verbose Output') do
-          PRINTER.verbose!
-        end
-
-        # Prints everything
-        opts.on_tail('-h', '--help', 'Show this message') do
-          PRINTER.print opts
-          options.halt = true
-        end
+        common_options(opts)
+        
       end # OptionParser.new
+    end
+
+    #
+    # Returns the options specifice to the add command only
+    #
+    def options_for_add(opts)
+      opts.on('-p', '--port PORT',
+              'Specify a port') do |port|
+        options.file_content.port_text = "  Port #{port}\n"
+      end
+
+      opts.on('-i', '--identity_file [key]',
+              'Add identity') do |key_path|
+        options.file_content.identity_file_text = "  IdentityFile #{key_path}\n"
+      end
+      
+      opts.on('-b', '--batch_mode', 'Batch Mode') do
+        options.file_content.batch_mode_text = "  BatchMode yes\n"
+      end
+    end
+
+    #
+    # Returns the standard options
+    #
+    def common_options(opts)
+      opts.separator ''
+      opts.separator 'Common options:'
+
+      # Another typical switch to print the version.
+      opts.on('-v', '--version', 'Show version') do
+        PRINTER.print Sshez.version
+        options.halt = true
+      end
+
+      opts.on('-z', '--verbose', 'Verbose Output') do
+        PRINTER.verbose!
+      end
+
+      # Prints everything
+      opts.on_tail('-h', '--help', 'Show this message') do
+        PRINTER.print opts
+        options.halt = true
+      end
     end
 
     #
