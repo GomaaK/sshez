@@ -19,24 +19,38 @@ module Sshez
     end # print(text)
 
     # 
+    # prints only if verbose set to true
+    #
     def verbose_print(text)
       @output += %Q|#{text}\n|
       puts text if @verbose
       @output
     end
 
+    #
+    # Did we print anything?
+    #
     def output?
       !@output.empty?
     end
 
+    #
+    # getter for all the printing log
+    #
     def output
       @output
     end
 
+    #
+    # Let the flooding begin!
+    #
     def verbose!
       @verbose = true
     end
 
+    #
+    # Resets the printer for testing purposes
+    #
     def clear!
       @output = ""
       @verbose = false

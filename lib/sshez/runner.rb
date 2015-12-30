@@ -1,4 +1,18 @@
 module Sshez  
+  #
+  # Our main class
+  # This will #process the command of the user
+  #
+  # Sshez::Runner.new.process(ARGV)
+  #
+  # acts as the listener that the +FileManager+ needs
+  # *  :argument_error(+Command+)
+  # *  :done_with_no_guarantee
+  # *  :permission_error
+  # *  :finished_successfully
+  #
+  #
+  #
   class Runner
     PRINTER = PrintingManager.instance
 
@@ -18,6 +32,9 @@ module Sshez
       PRINTER.print "Terminatted Successfully!"
     end
 
+    #
+    # Handles when the config file could not be accessed due to a problem in permissions
+    #
     def permission_error
       PRINTER.print "Premission denied!\nPlease check your ~/.ssh/config permissions then try again."
     end

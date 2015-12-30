@@ -1,5 +1,13 @@
 module Sshez  
   # handles parsing the arguments to meaningful actions
+  #
+  # Parser.new(listener).parse(args)
+  #
+  # to create an instance pass any +Struct+ that handles the following methods
+  # *  :start_exec(+Command+, +OpenStruct+(options))
+  # *  :argument_error(+Command+)
+  # *  :done_with_no_guarantee
+  #
   class Parser < Struct.new(:listener)
 
     PRINTER = PrintingManager.instance
@@ -124,10 +132,16 @@ module Sshez
         end
       end
 
+      #
+      # name getter
+      #
       def name
         @name
       end
 
+      #
+      # args getter
+      #
       def args
         @args
       end

@@ -1,4 +1,13 @@
 module Sshez  
+  #
+  # handles all the updates to the .ssh/config file
+  #
+  # to create an instance pass any +Struct+(listener) that handles the following methods
+  # *  :argument_error(+Command+)
+  # *  :done_with_no_guarantee
+  # *  :permission_error
+  # *  :finished_successfully
+  #
   class FileManager < Struct.new(:listener)
     FILE_PATH = File.expand_path('~') + "/.ssh/config"
     PRINTER = PrintingManager.instance
