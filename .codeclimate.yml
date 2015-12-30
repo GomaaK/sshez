@@ -1,5 +1,11 @@
+languages:
+  Ruby: true
 engines:
   brakeman:
+    enabled: true
+  rubycop:
+    enabled: true
+  rubymotion:
     enabled: true
 
 ratings:
