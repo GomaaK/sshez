@@ -1,13 +1,14 @@
-languages:
-  Ruby: true
+---
 engines:
-  brakeman:
+  bundler-audit:
     enabled: true
-  rubycop:
+  fixme:
     enabled: true
-  rubymotion:
+  rubocop:
     enabled: true
-
 ratings:
-   paths:
-   - ".rb"
+  paths:
+  - Gemfile.lock
+  - "**.rb"
+exclude_paths:
+- spec/**/*
