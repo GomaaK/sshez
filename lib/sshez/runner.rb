@@ -30,7 +30,7 @@ module Sshez
     # We've finished everything successfully
     #
     def finished_successfully
-      PRINTER.print "Terminatted Successfully!"
+      PRINTER.print 'Terminatted Successfully!'
     end
 
     #
@@ -52,7 +52,7 @@ module Sshez
     #
     def done_with_no_guarantee
       unless PRINTER.output?
-        PRINTER.print("Invalid input. Use -h for help")
+        PRINTER.print('Invalid input. Use -h for help')
       end
     end
 

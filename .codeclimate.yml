@@ -6,6 +6,10 @@ engines:
     enabled: true
   rubocop:
     enabled: true
+    # ... CONFIG CONTENT ...
+    checks:
+      Rubocop/Rails/Output:
+        enabled: false
 ratings:
   paths:
   - Gemfile.lock

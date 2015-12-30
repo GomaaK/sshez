@@ -13,7 +13,7 @@ module Sshez
 
     # adds to output then prints
     def print(text)
-      @output += %Q|#{text}\n|
+      @output += %Q(#{text}\n)
       puts text
     end # print(text)
 
@@ -21,7 +21,7 @@ module Sshez
     # prints only if verbose set to true
     #
     def verbose_print(text)
-      @output += %Q|#{text}\n|
+      @output += %Q(#{text}\n)
       puts text if @verbose
     end
 
@@ -50,7 +50,7 @@ module Sshez
     # Resets the printer for testing purposes
     #
     def clear!
-      @output = ""
+      @output = ''
       @verbose = false
     end
 

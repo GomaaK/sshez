@@ -9,9 +9,7 @@ module Sshez
   # *  :done_with_no_guarantee
   #
   class Parser < Struct.new(:listener)
-
     PRINTER = PrintingManager.instance
-
     #
     # Return a structure describing the options.
     #
@@ -26,45 +24,47 @@ module Sshez
       options = OpenStruct.new(file_content: OpenStruct.new)
 
       opt_parser = OptionParser.new do |opts|
-        opts.banner = "Usage:\n\tsshez add <alias> (role@host) [options]\n\tsshez remove <alias>\n\tsshez list"
+        opts.banner = "Usage:\n"+
+        "\tsshez add <alias> (role@host) [options]\n"+
+        "\tsshez remove <alias>\n\tsshez list"
 
-        opts.separator ""
-        opts.separator "Specific options:"
+        opts.separator ''
+        opts.separator 'Specific options:'
 
-        opts.on("-p", "--port PORT",
-                "Specify a port") do |port|
+        opts.on('-p', '--port PORT',
+                'Specify a port') do |port|
           options.file_content.port_text = "  Port #{port}\n"
         end
 
-        opts.on("-i", "--identity_file [key]",
-                "Add identity") do |key_path|
+        opts.on('-i', '--identity_file [key]',
+                'Add identity') do |key_path|
           options.file_content.identity_file_text = "  IdentityFile #{options.identity_file}\n"
         end
         
-        opts.on("-b", "--batch_mode", "Batch Mode") do
+        opts.on('-b', '--batch_mode', 'Batch Mode') do
           options.file_content.batch_mode_text = "  BatchMode yes\n"
         end
 
         # signals that we are in testing mode
-        opts.on("-t", "--test", "Writes nothing") do
+        opts.on('-t', '--test', 'Writes nothing') do
           options.test = true
         end
 
-        opts.separator ""
-        opts.separator "Common options:"
+        opts.separator ''
+        opts.separator 'Common options:'
 
         # Another typical switch to print the version.
-        opts.on("-v", "--version", "Show version") do
+        opts.on('-v', '--version', 'Show version') do
           PRINTER.print Sshez.version
           options.halt = true
         end
 
-        opts.on("-z", "--verbose", "Verbose Output") do
+        opts.on('-z', '--verbose', 'Verbose Output') do
           PRINTER.verbose!
         end
 
         # Prints everything
-        opts.on_tail("-h", "--help", "Show this message") do
+        opts.on_tail('-h', '--help', 'Show this message') do
           PRINTER.print opts
           options.halt = true
         end
@@ -114,9 +114,10 @@ module Sshez
       # a list of all commands
       #
       ALL = {
-        "add" => Command.new("add", (Proc.new { |args| (args.length == 2) && (args[1].include?("@")) }), "sshez add <alias> (role@host) [options]", (Proc.new {|alias_name, role_host| [alias_name] + role_host.split('@') })),
-        "remove" => Command.new("remove", (Proc.new { |args| args.length == 1 }), "sshez remove <alias>"),
-        "list" => Command.new("list", (Proc.new { |args| args.empty? }), "sshez list")
+        'add' => Command.new('add', (Proc.new { |args| (args.length == 2) && (args[1].include?('@')) }), 
+          'sshez add <alias> (role@host) [options]', (Proc.new {|alias_name, role_host| [alias_name] + role_host.split('@') })),
+        'remove' => Command.new('remove', (Proc.new { |args| args.length == 1 }), 'sshez remove <alias>'),
+        'list' => Command.new('list', (Proc.new { |args| args.empty? }), 'sshez list')
       }
       #
       # processes the value passed if a processor was defined
@@ -157,30 +158,28 @@ module Sshez
 
     end # class Command
 
-
     private
 
-      #
-      # Triggers the listener with the +Command+ and options parsed
-      #
-      def parsing_succeeded(command, options)
-        listener.start_exec(command, options)
-      end
+    #
+    # Triggers the listener with the +Command+ and options parsed
+    #
+    def parsing_succeeded(command, options)
+      listener.start_exec(command, options)
+    end
 
+    #
+    # Triggers the listener with the failure of the +Command+
+    #
+    def parsing_failed(command)
+      listener.argument_error(command)
+    end
 
-      #
-      # Triggers the listener with the failure of the +Command+
-      #
-      def parsing_failed(command)
-        listener.argument_error(command)
-      end
-
-      #
-      # Handles when there is no command (maybe only an option is given)
-      #
-      def no_command_supplied
-        listener.done_with_no_guarantee
-      end
+    #
+    # Handles when there is no command (maybe only an option is given)
+    #
+    def no_command_supplied
+      listener.done_with_no_guarantee
+    end
 
     # private
   end  # class Parser
