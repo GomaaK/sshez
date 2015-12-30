@@ -82,20 +82,9 @@ module Sshez
     # removes an aliase from the config file (all its occurrences will be removed too)
     #
     def remove(aliase_name, options)
-      started_removing = false
       file = File.open(FILE_PATH, 'r')
       new_file = File.open(FILE_PATH+'temp', 'w')
-      file.each do |line|
-        if line.include?("Host #{aliase_name}") || started_removing
-          # I will never stop till I find another host that is not the one I'm removing
-          condition = (started_removing && line.include?('Host ') && !line.include?(aliase_name))
-          PRINTER.verbose_print line unless condition
-          started_removing = !condition
-        else
-          # Everything else should be transfered safely to the other file
-          new_file.write(line)
-        end
-      end
+      remove_alias_name(aliase_name, file, new_file)
       file.close
       new_file.close
       File.delete(FILE_PATH)
@@ -112,16 +101,31 @@ module Sshez
     end # remove(aliase_name, options)
 
     #
+    # copies the content of the file to the new file without
+    # the sections concerning the alias_name
+    #
+    def remove_alias_name(alias_name, file, new_file)
+      started_removing = false
+      file.each do |line|
+        not_copying = line.include?("Host #{alias_name}") || started_removing
+        if not_copying
+          # I will never stop till I find another host that is not the one I'm removing
+          condition = (started_removing && line.include?('Host ') && !line.include?(alias_name))
+          PRINTER.verbose_print line unless condition
+          started_removing = !condition
+        else
+          # Everything else should be transfered safely to the other file
+          new_file.write(line)
+        end
+      end
+    end #remove_alias_name(alias_name, file, new_file)
+
+    #
     # lists the aliases available in the config file
     #
     def list(options)
       file = File.open(FILE_PATH, 'r')
-      servers = []
-      file.each do |line|
-        if line.include?('Host ')
-          servers << line.sub('Host', '')
-        end
-      end
+      servers = all_hosts_in(file)
       file.close
       if servers.empty?
         PRINTER.print 'No aliases added'
@@ -132,6 +136,19 @@ module Sshez
       finish_exec
     end # list(options)
 
+    #
+    # Returns all the alias names of in the file
+    #
+    def all_hosts_in(file)
+      servers = []
+      file.each do |line|
+        if line.include?('Host ')
+          servers << line.sub('Host', '')
+        end
+      end
+      servers
+    end
+    
     #
     # Raises a permission error to the listener
     #
