@@ -3,13 +3,14 @@ module Sshez
   #
   # Parser.new(listener).parse(args)
   #
-  # to create an instance pass any +Struct+ that handles the following methods
-  # *  :start_exec(+Command+, +OpenStruct+(options))
-  # *  :argument_error(+Command+)
-  # *  :done_with_no_guarantee
-  #
   class Parser
     PRINTER = PrintingManager.instance
+    #
+    # to create an instance pass any +Struct+ that handles the following methods
+    # *  :start_exec(+Command+, +OpenStruct+(options))
+    # *  :argument_error(+Command+)
+    # *  :done_with_no_guarantee
+    #
     attr_reader :listener
 
     #

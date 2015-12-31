@@ -3,6 +3,8 @@ module Sshez
   # Keeps track of the which command the user called
   #  
   class Command
+    # Exposes the name and arguments
+    attr_reader :name, :args
     # no one should create a command except from this class!
     #
     # name: can only be one of these [add, remove, list]
@@ -13,7 +15,6 @@ module Sshez
     # args_processor: (optional) a proc that will process the args 
     # before setting them
     #
-    attr_reader :name, :args
     def initialize(name, validator, correct_format, args_processor = nil)
       @name = name
       @validator = validator

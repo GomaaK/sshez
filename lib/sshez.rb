@@ -7,8 +7,12 @@ require 'sshez/version'
 require 'optparse'
 require 'ostruct'
 
-module Sshez
+#
+# Main gem module
+#
 
+module Sshez
+	# Returns version data
   def self.version
     return Sshez::VERSION
   end
