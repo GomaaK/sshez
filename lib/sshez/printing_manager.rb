@@ -5,6 +5,7 @@ module Sshez
   # Mainly used for testing purposes
   class PrintingManager
     include Singleton
+    # An attribute reader to store printing logs
     attr_reader :output
 
     def initialize
