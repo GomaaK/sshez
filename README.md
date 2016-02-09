@@ -13,7 +13,7 @@ If you have multiple servers that you access on daily bases! sshez helps you con
 Add an alias `mw_server`
 
     sshez mw_server root@74.125.224.72 -p 120
-    
+
 you will be able to use
 
     ssh mw_server
@@ -27,7 +27,8 @@ you will be able to use
     sshez -h
 
     Usage:
-        sshez <alias> (role@host) [options]
+        sshez add <alias> (role@host) [options]
+        sshez connect <alias>
         sshez remove <alias>
         sshez list
 
@@ -61,6 +62,3 @@ The gem is available as open source under the terms of the [MIT License](http://
 ## Missing
 
 *   All the other options in [ssh documentation](http://linux.die.net/man/5/ssh_config)
-
-
-

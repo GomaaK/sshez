@@ -1,4 +1,8 @@
-### Unreleased
+### 1.0.0 - 2016-02-09
+
+* enhancements
+  * Added `connect` for ssh connection
+  * Added `sshez add` as default and only way to add aliases (breaking change)
 
 ### 0.3.0 - 2015-12-14
 

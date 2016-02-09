@@ -1,18 +1,19 @@
 module Sshez
   #
   # Keeps track of the which command the user called
-  #  
+  #
   class Command
+    PRINTER = PrintingManager.instance
     # Exposes the name and arguments
     attr_reader :name, :args
     # no one should create a command except from this class!
     #
     # name: can only be one of these [add, remove, list]
-    # validator: a proc that returns true only if the input is valid 
+    # validator: a proc that returns true only if the input is valid
     # for the command
     # args: the args it self!
     # correct_format: the way the user should run this command
-    # args_processor: (optional) a proc that will process the args 
+    # args_processor: (optional) a proc that will process the args
     # before setting them
     #
     def initialize(name, validator, correct_format, args_processor = nil)
@@ -32,6 +33,10 @@ module Sshez
         (proc { |alias_name, role_host| [alias_name] + role_host.split('@') })),
       'remove' => Command.new('remove', (proc { |args| args.length == 1 }),
         'sshez remove <alias>'),
+      'connect' => Command.new('connect', (proc { |args| args.length == 1 }),
+        'sshez connect <alias>'),
+      'reset' => Command.new('reset', (proc { |args| args.length == 0 }),
+        'sshez reset'),
       'list' => Command.new('list', (proc { |args| args.empty? }), 'sshez list')
     }
     #
@@ -47,11 +52,11 @@ module Sshez
       @validator.call(args)
     end
     #
-    # returns the text that should appear for a user 
+    # returns the text that should appear for a user
     # in case of invalid input for this command
     #
     def error
-      "Invalid input (#{args.join(',')}) for #{@name}.\n#{@correct_format}"
+      "Invalid input `#{args.join(',')}` for #{@name}.\nUsage: #{@correct_format}"
     end
 
   end # class Command

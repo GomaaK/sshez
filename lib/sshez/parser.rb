@@ -26,7 +26,7 @@ module Sshez
     # command is the first argument passed in the commandline
     #
     # The options specified on the command line will be collected in *options*.
-    # options.file_content will contain 
+    # options.file_content will contain
     # what should be added in the next step to the config file
     def parse(args)
       args[0] ||= '-h'
@@ -48,7 +48,9 @@ module Sshez
       OptionParser.new do |opts|
         opts.banner = "Usage:\n"\
         "\tsshez add <alias> (role@host) [options]\n"\
-        "\tsshez remove <alias>\n\tsshez list"
+        "\tsshez connect <alias>\n"\
+        "\tsshez remove <alias>\n\tsshez list\n"\
+        "\tsshez reset\n"
         opts.separator ''
         opts.separator 'Specific options:'
         options_for_add(opts, options)
@@ -69,10 +71,10 @@ module Sshez
 
       opts.on('-i', '--identity_file [key]',
               'Add identity') do |key_path|
-        options.file_content.identity_file_text = 
+        options.file_content.identity_file_text =
           "  IdentityFile #{key_path}\n"
       end
-      
+
       opts.on('-b', '--batch_mode', 'Batch Mode') do
         options.file_content.batch_mode_text = "  BatchMode yes\n"
       end
