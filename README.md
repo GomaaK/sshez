@@ -31,6 +31,7 @@ you will be able to use
         sshez connect <alias>
         sshez remove <alias>
         sshez list
+        sshez reset
 
     Specific options:
         -p, --port PORT                  Specify a port
