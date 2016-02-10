@@ -68,7 +68,7 @@ describe Sshez do
     end
 
     it 'ends with 30' do
-      expect(output).to end_with "30\n\nTerminated Successfully!\n"
+      expect(output).to end_with "\nTerminated Successfully!\n"
     end
   end
 
