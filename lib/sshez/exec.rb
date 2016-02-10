@@ -154,8 +154,12 @@ module Sshez
     end # list(options)
 
     def reset(options)
-      file = File.open(FILE_PATH, "w")
-      file.close
+      resp = PRINTER.prompt 'Are you sure you want to remove all aliases? [Y/n]'
+      if resp.match(/y/i)
+        file = File.open(FILE_PATH, "w")
+        file.close
+        PRINTER.print 'You have successfully reset your ssh config file.'
+      end
     end
 
     #

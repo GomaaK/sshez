@@ -13,19 +13,30 @@ module Sshez
       @verbose = false
     end
 
-    # adds to output then prints
+    #
+    # Adds to output then prints
+    #
     def print(text)
       @output += %(#{text}\n)
       puts text
     end # print(text)
 
     #
-    # prints only if verbose set to true
+    # Adds to output and prints only if verbose set to true
     #
     def verbose_print(text)
       @output += %(#{text}\n)
       puts text if @verbose
     end
+
+    #
+    # Prompts for user input
+    #
+    def prompt(text)
+      @output += %(#{text}\n)
+      print text
+      STDIN.gets
+    end # print(text)
 
     #
     # Did we print anything?
