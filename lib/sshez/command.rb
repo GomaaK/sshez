@@ -33,6 +33,8 @@ module Sshez
         (proc { |alias_name, role_host| [alias_name] + role_host.split('@') })),
       'remove' => Command.new('remove', (proc { |args| args.length == 1 }),
         'sshez remove <alias>'),
+      'rm' => Command.new('remove', (proc { |args| args.length == 1 }),
+        'sshez rm <alias>'),
       'connect' => Command.new('connect', (proc { |args| args.length == 1 }),
         'sshez connect <alias>'),
       'reset' => Command.new('reset', (proc { |args| args.length == 0 }),

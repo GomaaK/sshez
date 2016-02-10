@@ -98,15 +98,17 @@ module Sshez
     #
     def remove(alias_name, options)
       file = File.open(FILE_PATH, 'r')
-      new_file = File.open(FILE_PATH + 'temp', 'w')
-      remove_alias_name(alias_name, file, new_file)
+      servers = all_hosts_in(file)
+      if servers.include?alias_name
+        new_file = File.open(FILE_PATH + 'temp', 'w')
+        remove_alias_name(alias_name, file, new_file)
 
-      File.delete(FILE_PATH)
-      File.rename(FILE_PATH + 'temp', FILE_PATH)
-      # Causes a bug in fedore if permission was not updated to 0600
-      File.chmod(0600, FILE_PATH)
-
-      unless PRINTER.output?
+        File.delete(FILE_PATH)
+        File.rename(FILE_PATH + 'temp', FILE_PATH)
+        # Causes a bug in fedore if permission was not updated to 0600
+        File.chmod(0600, FILE_PATH)
+        PRINTER.print "`#{alias_name}` was successfully removed from your hosts"
+      else
         PRINTER.print "Could not find host `#{alias_name}`"
       end
       finish_exec
@@ -154,8 +156,12 @@ module Sshez
     end # list(options)
 
     def reset(options)
-      file = File.open(FILE_PATH, "w")
-      file.close
+      resp = PRINTER.prompt 'Are you sure you want to remove all aliases? [Y/n]'
+      if resp.match(/y/i)
+        file = File.open(FILE_PATH, "w")
+        file.close
+        PRINTER.print 'You have successfully reset your ssh config file.'
+      end
     end
 
     #
