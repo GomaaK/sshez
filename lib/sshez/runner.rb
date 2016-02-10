@@ -1,11 +1,11 @@
-module Sshez  
+module Sshez
   #
   # Our main class
   # This will #process the command of the user
   #
   # Sshez::Runner.new.process(ARGV)
   #
-  # acts as the listener that the +FileManager+ needs
+  # Acts as the listener that the +Exec+ needs
   # *  :argument_error(+Command+)
   # *  :done_with_no_guarantee
   # *  :permission_error
@@ -21,7 +21,7 @@ module Sshez
     # takes un processed ARGS and pass it to our parser to start our processing
     #
     def process(args)
-      parser = Parser.new(FileManager.new(self))
+      parser = Parser.new(Exec.new(self))
       parser.parse(args)
       PRINTER.output
     end
@@ -30,7 +30,7 @@ module Sshez
     # We've finished everything successfully
     #
     def finished_successfully
-      PRINTER.print 'Terminatted Successfully!'
+      PRINTER.print 'Terminated Successfully!'
     end
 
     #
@@ -41,7 +41,7 @@ module Sshez
     end
 
     #
-    # Returns the appropriate error messages to the given command 
+    # Returns the appropriate error messages to the given command
     #
     def argument_error(command)
       PRINTER.print(command.error)

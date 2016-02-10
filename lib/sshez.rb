@@ -1,7 +1,7 @@
 require 'sshez/printing_manager'
 require 'sshez/parser'
 require 'sshez/command'
-require 'sshez/file_manager'
+require 'sshez/exec'
 require 'sshez/runner'
 require 'sshez/version'
 require 'optparse'

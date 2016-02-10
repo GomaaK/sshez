@@ -19,7 +19,7 @@ module Sshez
       puts text
     end # print(text)
 
-    # 
+    #
     # prints only if verbose set to true
     #
     def verbose_print(text)

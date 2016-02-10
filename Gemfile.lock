@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sshez (0.3.1)
+    sshez (1.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -32,4 +32,4 @@ DEPENDENCIES
   sshez!
 
 BUNDLED WITH
-   1.10.5
+   1.11.2
