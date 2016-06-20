@@ -12,11 +12,11 @@ If you have multiple servers that you access on daily bases! sshez helps you con
 
 Add an alias `mw_server`
 
-    sshez mw_server root@74.125.224.72 -p 120
+    sshez add mw_server root@74.125.224.72 -p 120
 
 you will be able to use
 
-    ssh mw_server
+    sshez connect mw_server
 
 ## Installation
 
